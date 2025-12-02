@@ -9,7 +9,7 @@ This is a modernized remake of the archived repository [MessAround](https://gith
 3. Extract the downloaded `.zip` file into the Revelation installation directory.
 4. Launch `Revelation.exe` and navigate to the **Mess Around** plugin page.
 5. Drag the “+” button to pick a window you want to hide or show.
-6. Set a custom hotkey(Pause in default) to toggle that window’s visibility.
+6. Set a custom hotkey(Pause by default) to toggle that window’s visibility.
 7. Press the hotkey to hide or show the selected window at any time.
 
 
