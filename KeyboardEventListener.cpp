@@ -8,9 +8,15 @@ KeyboardEventListener::KeyboardEventListener(QObject* parent)
 KeyboardEventListener::~KeyboardEventListener()
 {
 #ifdef Q_OS_WINDOWS
-    for (auto& [winHandle, _] : m_winHandle2Info)
+    std::vector<HWND> handles;
+    for (auto& [handle, _] : m_winHandle2Info)
     {
-        StopListening(winHandle);
+        handles.push_back(handle);
+    }
+
+    for (auto& handle : handles)
+    {
+        StopListening(handle);
     }
 #endif
 }
@@ -80,7 +86,7 @@ void KeyboardEventListener::OnKeyDown(Qt::Key key)
             SetWindowPos(handle, HWND_TOPMOST,
                          rect.left, rect.top,
                          rect.right - rect.left, rect.bottom - rect.top,
-                         SWP_HIDEWINDOW);
+                         SWP_SHOWWINDOW);
         }
     }
 #endif
@@ -106,7 +112,7 @@ void KeyboardEventListener::OnKeyUp(Qt::Key key)
             SetWindowPos(handle, HWND_TOPMOST,
                          rect.left, rect.top,
                          rect.right - rect.left, rect.bottom - rect.top,
-                         SWP_SHOWWINDOW);
+                         SWP_HIDEWINDOW);
         }
     }
 #endif
