@@ -4,6 +4,7 @@
 #include <set>
 
 static KeyboardEventProducer* s_instance;
+std::set<Qt::Key>             g_downKeys;
 
 #ifdef Q_OS_WINDOWS
 LRESULT CALLBACK KeyboardProc(int code, WPARAM wParam, LPARAM lParam)
@@ -14,13 +15,15 @@ LRESULT CALLBACK KeyboardProc(int code, WPARAM wParam, LPARAM lParam)
         Qt::Key          translatedKey;
         if (KeyboardTranslator::Translate(p->vkCode, translatedKey))
         {
-            if (wParam == WM_KEYDOWN)
+            if (wParam == WM_KEYDOWN && g_downKeys.count(translatedKey) == 0)
             {
+                g_downKeys.insert(translatedKey);
                 emit s_instance->KeyDown(translatedKey);
             }
-            else if (wParam == WM_KEYUP)
+            else if (wParam == WM_KEYUP && g_downKeys.count(translatedKey) != 0)
             {
                 emit s_instance->KeyUp(translatedKey);
+                g_downKeys.erase(translatedKey);
             }
         }
     }
