@@ -38,7 +38,7 @@ void MessAround::mouseReleaseEvent(QMouseEvent* event)
 
         HWND windowHandle = WindowFromPoint(pt);
         windowHandle      = GetAncestor(windowHandle, GA_ROOT);
-        emit OnWindowPicked(windowHandle);
+        OnWindowPicked(windowHandle);
 #endif
     }
 
@@ -76,20 +76,6 @@ void MessAround::InitSignalSlots()
 #ifdef Q_OS_WINDOWS
 void MessAround::OnWindowPicked(HWND windowHandle)
 {
-    // wchar_t title[512];
-    // GetWindowTextW(windowHandle, title, 512);
-    //
-    // // ui.editTitle->setText(QString::fromStdWString(std::wstring(title)));
-    //
-    // LONG exStyle     = GetWindowLong(m_windowHandle, GWL_EXSTYLE);
-    // bool alwaysOnTop = (exStyle & WS_EX_TOPMOST) != 0;
-    //
-    // BYTE     alpha;
-    // DWORD    flags = 0;
-    // COLORREF key   = 0;
-    //
-    // BOOL ok = GetLayeredWindowAttributes(m_windowHandle, &key, &alpha, &flags);
-
     m_eventListener->StartListening(windowHandle, Qt::Key_Pause);
 
     wchar_t title[512];
